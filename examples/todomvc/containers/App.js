@@ -3,7 +3,7 @@ import TodoApp from './TodoApp';
 import { createStore, combineReducers, compose } from 'redux';
 import { devTools } from '../../../src';
 import { persistState } from 'redux-devtools';
-import { LogMonitor, DevTools } from '../../../src/react';
+import { ImportExportMonitor, DevTools } from '../../../src/react';
 import { DebugPanel } from 'redux-devtools/lib/react';
 import { Provider } from 'react-redux';
 import * as reducers from '../reducers';
@@ -26,7 +26,7 @@ export default class App extends Component {
         </Provider>
         <DebugPanel top right bottom>
           <DevTools store={store}
-                    monitor={LogMonitor} />
+                    monitor={ImportExportMonitor} />
         </DebugPanel>
       </div>
     );

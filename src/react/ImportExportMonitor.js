@@ -6,8 +6,6 @@ export default class LogMonitor extends Component {
   constructor(props) {
     super(props);
 
-    window.addEventListener('keydown', ::this.handleKeyPress);
-
     this.state = {
       inputOpen: false,
       importValue: ''
@@ -33,7 +31,7 @@ export default class LogMonitor extends Component {
 
   static defaultProps = {
     select: (state) => state,
-    monitorState: { isVisible: true }
+    monitorState: {isVisible: true}
   };
 
   componentWillReceiveProps(nextProps) {
@@ -69,38 +67,6 @@ export default class LogMonitor extends Component {
     }
   }
 
-  handleRollback() {
-    this.props.rollback();
-  }
-
-  handleSweep() {
-    this.props.sweep();
-  }
-
-  handleCommit() {
-    this.props.commit();
-  }
-
-  handleToggleAction(index) {
-    this.props.toggleAction(index);
-  }
-
-  handleReset() {
-    this.props.reset();
-  }
-
-  handleKeyPress(event) {
-    const { monitorState } = this.props;
-
-    if (event.ctrlKey && event.keyCode === 72) { // Ctrl+H
-      event.preventDefault();
-      this.props.setMonitorState({
-        ...monitorState,
-        isVisible: !monitorState.isVisible
-      });
-    }
-  }
-
   handleImport() {
     let importValue = JSON.parse(this.state.importValue);
     let { committedState, stagedActions } = importValue;
@@ -131,7 +97,7 @@ export default class LogMonitor extends Component {
   renderInput() {
     return (
       <div>
-        <input type='text' name='import' onChange={::this.handleInputChange} />
+        <input type='text' name='import' onChange={::this.handleInputChange}/>
         <a onClick={::this.handleImport}
            style={{ textDecoration: 'underline', cursor: 'hand' }}>
           <small>Save</small>
@@ -141,32 +107,11 @@ export default class LogMonitor extends Component {
   }
 
   render() {
-    const elements = [];
     const { monitorState, skippedActions, stagedActions, computedStates, select } = this.props;
 
-    if (!monitorState.isVisible) {
-      return null;
-    }
+    const serializedState = this.getStateAndActions();
 
-    for (let i = 0; i < stagedActions.length; i++) {
-      const action = stagedActions[i];
-      const { state, error } = computedStates[i];
-
-      elements.push(
-        <LogMonitorEntry key={i}
-                         index={i}
-                         select={select}
-                         action={action}
-                         state={state}
-                         collapsed={skippedActions[i]}
-                         error={error}
-                         onActionClick={::this.handleToggleAction} />
-      );
-    }
-
-    let serializedState = this.getStateAndActions();
-
-    let input = this.state.inputOpen ? this.renderInput() : <div></div>;
+    const input = this.state.inputOpen ? this.renderInput() : <div></div>;
 
     return (
       <div style={{
@@ -178,15 +123,9 @@ export default class LogMonitor extends Component {
           <div style={{
             paddingBottom: '.5rem'
           }}>
-            <small>Press Ctrl+H to hide.</small>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <a onClick={::this.handleReset}
-               style={{ textDecoration: 'underline', cursor: 'hand' }}>
-              <small>Reset</small>
-            </a>
-            <a
-               style={{ textDecoration: 'underline', cursor: 'hand' }}>
+            <a style={{ textDecoration: 'underline', cursor: 'hand' }}>
               <ReactZeroClipboard text={serializedState}>
                 <small>Export</small>
               </ReactZeroClipboard>
@@ -198,35 +137,6 @@ export default class LogMonitor extends Component {
           </div>
         </div>
         {input}
-        {elements}
-        <div>
-          {computedStates.length > 1 &&
-            <a onClick={::this.handleRollback}
-               style={{ textDecoration: 'underline', cursor: 'pointer' }}>
-              Rollback
-            </a>
-          }
-          {Object.keys(skippedActions).some(key => skippedActions[key]) &&
-            <span>
-              {' • '}
-              <a onClick={::this.handleSweep}
-                 style={{ textDecoration: 'underline', cursor: 'pointer' }}>
-                Sweep
-              </a>
-            </span>
-          }
-          {computedStates.length > 1 &&
-            <span>
-              <span>
-              {' • '}
-              </span>
-              <a onClick={::this.handleCommit}
-                 style={{ textDecoration: 'underline', cursor: 'pointer' }}>
-                Commit
-              </a>
-            </span>
-          }
-        </div>
       </div>
     );
   }
