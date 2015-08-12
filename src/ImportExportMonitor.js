@@ -70,7 +70,6 @@ export default class LogMonitor extends Component {
     let importValue = JSON.parse(this.state.importValue);
     let { committedState, stagedActions } = importValue;
 
-    this.toggleInput();
     this.props.recomputeStates(committedState, stagedActions);
   }
 
