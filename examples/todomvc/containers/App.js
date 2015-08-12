@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import TodoApp from './TodoApp';
 import { createStore, combineReducers, compose } from 'redux';
 import { persistState , devTools} from 'redux-devtools';
-import { ImportExportMonitor } from '../../../src/react';
+import { ImportExportMonitor } from '../../../src';
 import { DebugPanel, DevTools } from 'redux-devtools/lib/react';
 import { Provider } from 'react-redux';
 import * as reducers from '../reducers';
