@@ -7,7 +7,6 @@ export default class LogMonitor extends Component {
     super(props);
 
     this.state = {
-      inputOpen: false,
       importValue: ''
     };
   }
@@ -88,30 +87,10 @@ export default class LogMonitor extends Component {
     });
   }
 
-  toggleInput() {
-    this.setState({
-      inputOpen: !this.state.inputOpen
-    });
-  }
-
-  renderInput() {
-    return (
-      <div>
-        <input type='text' name='import' onChange={::this.handleInputChange}/>
-        <a onClick={::this.handleImport}
-           style={{ textDecoration: 'underline', cursor: 'hand' }}>
-          <small>Save</small>
-        </a>
-      </div>
-    );
-  }
-
   render() {
     const { monitorState, skippedActions, stagedActions, computedStates, select } = this.props;
 
     const serializedState = this.getStateAndActions();
-
-    const input = this.state.inputOpen ? this.renderInput() : <div></div>;
 
     return (
       <div style={{
@@ -125,19 +104,26 @@ export default class LogMonitor extends Component {
             paddingBottom: '.5rem'
           }}>
           </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <a style={{ textDecoration: 'underline', cursor: 'hand' }}>
-              <ReactZeroClipboard text={serializedState}>
-                <small>Export</small>
-              </ReactZeroClipboard>
-            </a>
-            <a onClick={::this.toggleInput}
-               style={{ textDecoration: 'underline', cursor: 'hand' }}>
-              <small>Import</small>
-            </a>
+          <div>
+            <div>
+              <small>Import:</small>
+              <input type='text' name='import' onChange={::this.handleInputChange}/>
+              <a onClick={::this.handleImport}
+                 style={{ textDecoration: 'underline', cursor: 'hand' }}>
+                <small>Save</small>
+              </a>
+            </div>
+            <br/>
+
+            <div style={{ textAlign: 'center' }}>
+              <a style={{ textDecoration: 'underline', cursor: 'hand' }}>
+                <ReactZeroClipboard text={serializedState}>
+                  <small>Export</small>
+                </ReactZeroClipboard>
+              </a>
+            </div>
           </div>
         </div>
-        {input}
       </div>
     );
   }
