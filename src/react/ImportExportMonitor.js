@@ -117,7 +117,8 @@ export default class LogMonitor extends Component {
       <div style={{
         fontFamily: 'monospace',
         position: 'relative',
-        padding: '1rem'
+        padding: '1rem',
+        color: 'black'
       }}>
         <div>
           <div style={{
