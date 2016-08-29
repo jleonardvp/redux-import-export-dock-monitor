@@ -1,6 +1,6 @@
 {
-  "name": "redux-import-export-monitor",
-  "description": "Redux DevTools monitor for copying state/action log to clipboard as well as pasting it back in.",
+  "name": "redux-import-export-dock-monitor",
+  "description": "Redux DevTools monitor for copying state/action log as well as pasting it back in within the DockMonitor DevTool.",
   "main": "lib/index.js",
   "scripts": {
     "clean": "rimraf lib",
@@ -22,17 +22,18 @@
   }, 
   "repository": {
     "type": "git",
-    "url": "https://github.com/lapanoid/redux-import-export-monitor.git"
+    "url": "https://github.com/jleonardvp/redux-import-export-dock-monitor.git"
   },
   "authors": [
+    "Jon Leonard",
     "Cale Newman",
     "Sergey Lapin"
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/gaearon/redux-import-export-monitor/issues"
+    "url": "https://github.com/jleonardvp/redux-import-export-dock-monitor/issues"
   },
-  "homepage": "https://github.com/gaearon/redux-import-export-monitor",
+  "homepage": "https://github.com/jleonardvp/redux-import-export-dock-monitor",
   "devDependencies": {
     "babel": "^5.8.34",
     "babel-core": "^5.8.34",
