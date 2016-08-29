@@ -1,12 +1,11 @@
 import React, { PropTypes, Component } from 'react';
 import shallowCompare from 'react-addons-shallow-compare';
 import { ActionCreators } from 'redux-devtools';
-import parseKey from 'parse-key';
 
 const { importState } = ActionCreators;
 
 import reducer from './reducers';
-import InputModal from './InputModal';
+import InputDock from './InputDock';
 
 export default class ImportExportMonitor extends Component {
   static update = reducer;
@@ -14,15 +13,8 @@ export default class ImportExportMonitor extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      inputOpen: false
-    };
-
-    this.matchesKey = this.matchesKey.bind(this);
-    this.handleKeyPress = this.handleKeyPress.bind(this);
     this.handleImport = this.handleImport.bind(this);
     this.getStateAndActions = this.getStateAndActions.bind(this);
-    this.closeModal = this.closeModal.bind(this);
   }
 
   static propTypes = {
@@ -38,44 +30,15 @@ export default class ImportExportMonitor extends Component {
     stagedActions: PropTypes.array,
     skippedActionIds: PropTypes.array,
     nextActionId: PropTypes.number,
-    select: PropTypes.func.isRequired,
-    openModalKey: PropTypes.string
+    select: PropTypes.func.isRequired
   };
 
   static defaultProps = {
-    select: (state) => state,
-    openModalKey: 'meta-shift-e'
+    select: (state) => state
   };
 
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState);
-  }
-
-  componentDidMount() {
-    window.addEventListener('keydown', ::this.handleKeyPress);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('keydown', ::this.handleKeyPress);
-  }
-
-  matchesKey(key, event) {
-    const charCode = event.keyCode || event.which;
-    const char = String.fromCharCode(charCode);
-    return key.name.toUpperCase() === char.toUpperCase() &&
-      key.alt === event.altKey &&
-      key.ctrl === event.ctrlKey &&
-      key.meta === event.metaKey &&
-      key.shift === event.shiftKey;
-  }
-
-  handleKeyPress(e) {
-    const modalKey = parseKey(this.props.openModalKey);
-
-    if (this.matchesKey(modalKey, e)) {
-      e.preventDefault();
-      this.setState({ inputOpen: true });
-    }
   }
 
   handleImport(newState) {
@@ -101,18 +64,12 @@ export default class ImportExportMonitor extends Component {
     };
   }
 
-  closeModal() {
-    this.setState({ inputOpen: false });
-  }
-
   render() {
     const appState = JSON.stringify(this.getStateAndActions());
 
     return (
-      <InputModal
-        isOpen={this.state.inputOpen}
+      <InputDock
         appState={appState}
-        closeModal={this.closeModal}
         onSubmit={this.handleImport}
       />
     );
