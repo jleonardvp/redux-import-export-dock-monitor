@@ -20,20 +20,20 @@ export default class InputDock extends Component {
   }
 
   saveStateToDisk() {
-    saveAs(new File([this.props.appState], "appState.json", {type: "text/json;charset=utf-8"}))
+    saveAs(new File([this.props.appState], 'appState.json', { type: 'text/json;charset=utf-8' }));
   }
 
   loadStateFromDisk(e) {
     e.preventDefault();
 
-    let reader = new FileReader();
-    let file = e.target.files[0];
+    const reader = new FileReader();
+    const file = e.target.files[0];
 
     reader.onloadend = () => {
       this.props.onSubmit(reader.result);
-    }
+    };
 
-    reader.readAsText(file)
+    reader.readAsText(file);
   }
 
   render() {
@@ -41,7 +41,7 @@ export default class InputDock extends Component {
       <div>
         <button style={{ flex: 1 }} onClick={this.saveStateToDisk}>Save State</button>
         <br/><br/>
-        Load State <input type="file" id="fileInput" onChange={this.loadStateFromDisk}/>
+        Load State <input type='file' id='fileInput' onChange={this.loadStateFromDisk}/>
       </div>
     );
   }

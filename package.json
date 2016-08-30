@@ -1,6 +1,7 @@
 {
   "name": "redux-import-export-dock-monitor",
-  "description": "Redux DevTools monitor for copying state/action log as well as pasting it back in within the DockMonitor DevTool.",
+  "version": "1.0.0",
+  "description": "Redux DevTools monitor for exporting state/action log to disk as well as importing it back in within the DockMonitor DevTool.",
   "main": "lib/index.js",
   "scripts": {
     "clean": "rimraf lib",
